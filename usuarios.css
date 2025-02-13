@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.main-container {
+    flex: 1;
+    padding: 20px;
+}
+
+.edit-form {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.edit-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.edit-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.edit-form .btn-update {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-form .btn-update:hover {
+    background-color: #2980b9;
+}
+
+.edit-form .btn-delete {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-form .btn-delete:hover {
+    background-color: #c0392b;
+}
+
+.user-table {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-table h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.user-table ul {
+    list-style: none;
+    padding: 0;
+}
+
+.user-table li {
+    background: #ecf0f1;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.user-table li:hover {
+    background-color: #bdc3c7;
+}

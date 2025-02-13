@@ -1,0 +1,12 @@
+.edit-form input[type="date"] {
+    width: 50%; /* Reduce el ancho del cuadro de fecha a la mitad */
+}
+
+.edit-form textarea {
+    width: 100%; /* Asegura que el cuadro de descripción ocupe todo el ancho disponible */
+    height: 100px; /* Puedes ajustar la altura según sea necesario */
+    padding: 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
