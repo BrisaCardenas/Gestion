@@ -1,6 +1,6 @@
 <?php
-include 'db.php'; 
-include 'sidebar.php'; 
+include 'db.php';
+include 'sidebar.php';
 ?>
 
 <!DOCTYPE html>
@@ -9,51 +9,31 @@ include 'sidebar.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial</title>
-    <link rel="stylesheet" href="style2.css"> 
+    <link rel="stylesheet" href="historial.css">
 </head>
 <body>
 <div class="main-container">
     <div class="user-table">
-        <h1>Historial de Usuarios</h1>
+        <h1>Historial</h1>
         <ul>
             <?php
-            $sqlUsuarios = "SELECT h.id_historial, u.Nombre AS Usuario, e.Nombre AS Equipo, h.Fecha_devolucion 
-                            FROM historial h 
-                            JOIN usuario u ON h.usuario_id_Usuario = u.id_Usuario 
-                            JOIN equipo e ON h.equipo_id_Equipo = e.id_Equipo 
-                            ORDER BY h.Fecha_devolucion DESC";  
-            $resultUsuarios = $conn->query($sqlUsuarios);
-            if ($resultUsuarios && $resultUsuarios->num_rows > 0) {
-                while ($row = $resultUsuarios->fetch_assoc()) {
+            // Consulta para obtener el historial de acciones (inserciones y modificaciones)
+            $sqlHistorial = "SELECT * FROM historial ORDER BY fecha DESC";
+            $resultHistorial = $conn->query($sqlHistorial);
+            
+            if ($resultHistorial && $resultHistorial->num_rows > 0) {
+                while ($row = $resultHistorial->fetch_assoc()) {
                     echo "<li>
-                            <strong>" . htmlspecialchars($row['Usuario']) . "</strong> - " . htmlspecialchars($row['Equipo']) . " - " . htmlspecialchars($row['Fecha_devolucion']) . "
+                            <strong>Tabla:</strong> " . htmlspecialchars($row['tabla']) . " - 
+                            <strong>Acción:</strong> " . htmlspecialchars($row['accion']) . " - 
+                            <strong>Datos:</strong> " . htmlspecialchars($row['datos']) . " - 
+                            <strong>Tipo de Acción:</strong> " . htmlspecialchars($row['Tipo_Accion']) . " - 
+                            <strong>Usuario:</strong> " . htmlspecialchars($row['usuario_Correo']) . " - 
+                            <strong>Fecha:</strong> " . htmlspecialchars($row['fecha']) . "
                           </li>";
                 }
             } else {
-                echo "<li>No hay registros en el historial de usuarios.</li>";
-            }
-            ?>
-        </ul>
-    </div>
-
-    <div class="user-table">
-        <h1>Historial de Equipos</h1>
-        <ul>
-            <?php
-            $sqlEquipos = "SELECT e.Nombre AS Equipo, e.Estado, u.Nombre AS Usuario, h.Fecha_devolucion 
-                            FROM historial h 
-                            JOIN equipo e ON h.equipo_id_Equipo = e.id_Equipo 
-                            LEFT JOIN usuario u ON h.usuario_id_Usuario = u.id_Usuario 
-                            ORDER BY h.Fecha_devolucion DESC";  
-            $resultEquipos = $conn->query($sqlEquipos);
-            if ($resultEquipos && $resultEquipos->num_rows > 0) {
-                while ($row = $resultEquipos->fetch_assoc()) {
-                    echo "<li>
-                            <strong>" . htmlspecialchars($row['Equipo']) . "</strong> - Estado: " . htmlspecialchars($row['Estado']) . " - Asignado a: " . (htmlspecialchars($row['Usuario']) ?: 'Nadie') . " - " . htmlspecialchars($row['Fecha_devolucion']) . "
-                          </li>";
-                }
-            } else {
-                echo "<li>No hay registros en el historial de equipos.</li>";
+                echo "<li>No hay registros en el historial.</li>";
             }
             ?>
         </ul>

@@ -2,7 +2,7 @@
 session_start();
 
 $default_email = "rhenriquez@jx-nmm.com";
-
+// Inicio de sesion
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"] ?? $default_email; 
     $remember = isset($_POST["remember"]);

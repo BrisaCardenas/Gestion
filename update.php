@@ -1,41 +1,51 @@
 <?php
+session_start();
 include 'db.php'; 
 
+$message = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $correo = $_POST['correo'] ?? null;
+    $nombre = $_POST['nombre'] ?? null;
 
-    $nombre = $_POST['nombre'];
-    $correo = $_POST['correo'];
+    if (!empty($correo) && !empty($nombre)) {
+        $stmtUpdate = $conn->prepare("UPDATE usuario SET Nombre = ? WHERE Correo = ?");
+        $stmtUpdate->bind_param("ss", $nombre, $correo);
 
-    if (!empty($nombre) && !empty($correo)) {
+        if ($stmtUpdate->execute()) {
+            
+            $historialStmt = $conn->prepare("INSERT INTO historial (tabla, accion, datos, Tipo_Accion, usuario_Correo) VALUES (?, ?, ?, ?, ?)");
+            $historialStmt->bind_param("sssss", $table, $action, $data, $typeAction, $userEmail);
 
-        $sqlCheck = "SELECT * FROM usuario WHERE Nombre = ?";
-        $stmtCheck = $conn->prepare($sqlCheck);
-        $stmtCheck->bind_param("s", $nombre);
-        $stmtCheck->execute();
-        $resultCheck = $stmtCheck->get_result();
+            $table = 'usuario'; 
+            $action = 'update';
+            $data = json_encode(['Nombre' => $nombre, 'Correo' => $correo]);
+            $typeAction = 'Modificar';
+            $userEmail = $_SESSION['email']; 
 
-        if ($resultCheck->num_rows > 0) {
-            echo "El usuario ya existe. Por favor, elige un nombre diferente.";
+            $historialStmt->execute();
+            $historialStmt->close();
+
+            $message = "Usuario actualizado correctamente.";
         } else {
-    
-            $sql = "INSERT INTO usuario (Nombre, Correo) VALUES (?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $nombre, $correo);
-
-            if ($stmt->execute()) {
-                header("Location: usuarios.php");
-            } else {
-                echo "Error al agregar el usuario: " . $stmt->error;
-            }
-
-            $stmt->close();
+            $message = "Error al actualizar el usuario: " . $stmtUpdate->error;
         }
 
-        $stmtCheck->close();
+        $stmtUpdate->close();
     } else {
-        echo "Por favor, complete todos los campos.";
+        $message = "Por favor, complete todos los campos.";
     }
-
-    $conn->close();
 }
+
+if (isset($_GET['correo'])) {
+    $correo = $_GET['correo'];
+    $stmt = $conn->prepare("SELECT * FROM usuario WHERE Correo = ?");
+    $stmt->bind_param("s", $correo);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $usuario = $result->fetch_assoc();
+    $stmt->close();
+}
+
+$conn->close();
 ?>

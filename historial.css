@@ -1,0 +1,33 @@
+.main-container {
+    padding: 20px;
+    background-color: #f9f9f9; /* Color de fondo */
+}
+
+.user-table {
+    background: #fff; /* Fondo blanco para la tabla */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.user-table h1 {
+    font-size: 24px; /* Tamaño de fuente */
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.user-table ul {
+    list-style: none; /* Sin viñetas */
+    padding: 0; /* Sin padding */
+}
+
+.user-table li {
+    background: #ecf0f1; /* Color de fondo de los elementos de la lista */
+    margin: 10px 0; /* Margen entre elementos */
+    padding: 10px; /* Padding interno */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+.user-table li:hover {
+    background-color: #bdc3c7; /* Color al pasar el mouse */
+}
